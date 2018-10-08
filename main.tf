@@ -6,6 +6,9 @@ variable "region" {
   default = "us-east-2"
 }
 
+variable "ami_id" {
+}
+
 provider "aws" {
   access_key = "${var.access_key}"
   secret_key = "${var.secret_key}"
@@ -17,11 +20,11 @@ resource "random_id" "server" {
 }
 
 resource "aws_instance" "server" {
-  ami           = "ami-941a1ff1"
+  ami           = "${var.ami_id}"
   instance_type = "t2.micro"
 
   tags {
     "Identity" = "test-web-srv"
-    "Name"     = "${random_id.server.hex}"
+    "Name"     = "name.${random_id.server.hex}"
   }
 }
